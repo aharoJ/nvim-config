@@ -62,6 +62,21 @@ return {
 				inactive = "lualine_b_normal", -- Color for inactive tab.
 			},
 		}
+		local function custom_tab_buffer()
+			local result = {}
+			for i, buffer in ipairs(vim.fn.getbufinfo({ buflisted = true })) do
+				local bufname = vim.fn.fnamemodify(vim.fn.bufname(buffer.bufnr), ":t")
+				if buffer.changed == 1 then
+					-- Add a modified symbol if the buffer is modified
+					bufname = bufname .. " ●"
+				end
+				-- Insert the buffer name and the vertical bar separator
+				table.insert(result, bufname .. " |")
+			end
+			-- Remove the last separator
+			result[#result] = result[#result]:sub(1, -3)
+			return table.concat(result, " ")
+		end
 
 		local diagnostics = {
 			"diagnostics",
@@ -209,13 +224,22 @@ return {
 			tabline = {
 				lualine_a = {
 					{
+						function()
+							-- return "{"
+							return ""
+						end, -- Left padding
+						padding = { left = 5, right = 1 }, -- Adjust padding as needed
+						cond = nil,
+					},
+
+					{
 						"buffers",
 						show_filename_only = true, -- IMPORTANT cuz false is whack
 						hide_filename_extension = true, -- Hide .java | .py | etc...
 						show_modified_status = true, -- Shows indicator when the buffer is modified.
 						use_mode_colors = true, -- change colors with MODE
 						color = { fg = "#808080", bg = "#303030", gui = "bold" }, -- sets the foreground to gray, adjust as needed
-						mode = 2, -- 0 | 1 | 2 | 3 | 4
+						mode = 0, -- 0 | 1 | 2 | 3 | 4
 						max_length = vim.o.columns * 2 / 3, -- Maximum width of buffers component,
 						filetype_names = {
 							TelescopePrompt = "Telescope",
@@ -224,16 +248,19 @@ return {
 							fzf = "FZF",
 							alpha = "Alpha",
 						},
-						-- buffers_color = {
-						--     active = "PmenuSel",
-						--     inactive = "Pmenu",
-						-- },
-
 						symbols = {
 							modified = " ●", -- Text to show when the buffer is modified
 							alternate_file = "#", -- Text to show to identify the alternate file
 							directory = "", -- Text to show when the buffer is a directory
 						},
+					},
+					{
+						function()
+							-- return "}"
+							return ""
+						end, -- Left padding
+						padding = { left = 1, right = 5 }, -- Adjust padding as needed
+						cond = nil,
 					},
 				},
 				lualine_z = {

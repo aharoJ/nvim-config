@@ -42,21 +42,20 @@ return {
       hi 6 guifg=#86C99D " baby green
       hi 7 guifg=#C99886 " baby orange
       ]]),
-      ----------------                       ------------------------
       rainbow = {
-        enable = true,
+        enable = false,
         disable = { "jsx", "cpp" },
         query = "rainbow-parens",
         strategy = require("ts-rainbow").strategy.global,
         hlgroups = {
           "6",
-          "1",
+          "TSRainbowBlue",
           "2",
+          "1",
           "7",
           "4",
           "3",
           "5",
-          -- ----------------                       ------------------------
           -- "TSRainbowBlue",
           -- "TSRainbowViolet", -- a nice purple-redish color
           -- "TSRainbowCyan", -- nice brown-goldish color
@@ -64,8 +63,10 @@ return {
           -- "TSRainbowRed",
           -- "TSRainbowYellow",
           -- "TSRainbowOrange",
+      -- ----------------                       ------------------------
         },
       },
     })
   end,
 }
+

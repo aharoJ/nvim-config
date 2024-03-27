@@ -10,7 +10,7 @@ return {
 				light = "latte",
 				dark = "mocha",
 			},
-			transparent_background = true, 
+			transparent_background = false, -- disables setting the background color.
 			show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
 			term_colors = false,
 			dim_inactive = {
@@ -68,6 +68,9 @@ return {
 ["@string.java"] = { fg = "#B0C8A9" }, -- true | false
 -- ["@comment.java"] = { fg = "#FF7F50" }, -- comments //
 -- ["@comment.documentation.java"] = { fg = "#FF7F50" }, -- /*    */
+-- ffffff
+-- ["@lsp.mod.declaration.java"] = { fg = "#DF5757" }, -- ****** LEAVE EMPTY ***
+-- C0CAF5 |  | 6C7891 |  7E9C8C | 8AA2A9 | B8AD9E | A9C1B9 | B8AD9E | A9BEDA | B0C8A9 | F2B8D2 | B0A9C1
 -- #C0CAF5: soft blue
 -- #6C7891: soft indigo
 -- #B8AD9E: darker yellow
@@ -78,6 +81,20 @@ return {
 -- #F2B8D2: pink
 -- #B0A9C1: gray
 -- C57F9E pink
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
+-- ["@"] = { fg = "#ffffff" },
 -- ["@"] = { fg = "#ffffff" },
 -- ["@"] = { fg = "#ffffff" },
 					}
@@ -102,3 +119,19 @@ return {
 		vim.cmd.colorscheme("catppuccin")
 	end,
 }
+
+-- ["@keyword.import.java"] = { fg = "#979BF1" }, -- import
+-- ["@lsp.type.modifier.java"] = { fg = "#9CA3AF" }, -- public class
+-- ["@keyword.conditional.java"] = { fg = "#F17C99" }, -- if () else if ()
+-- ["@comment.java"] = { fg = "#F19797" }, -- comments //
+-- ["@comment.documentation.java"] = { fg = "#FF7F50" }, -- /*    */
+-- ["@keyword.operator.java"] = { fg = "#9CA3AF" }, -- new
+-- ["@keyword.return.java"] = { fg = "#979BF1" },  -- RETURN
+-- ["@lsp.typemod.class.declaration.java"] = { fg = "#4CA0B6" }, -- public class DECLARATION_NAME
+-- ["@lsp.type.class.java"] = { fg = "#DF5757" }, -- Parameter Type Class
+-- ["@lsp.mod.declaration.java"] = { fg = "#DF5757" }, -- ****** LEAVE EMPTY ***
+-- ["@lsp.mod.public.java"] = { fg = "#ffffff" }, -- String
+-- ["@type.builtin.java"] = { fg = "#ffffff" }, -- int | double | float
+-- ["@lsp.typemod.class.typeArgument.java"] = { fg = "#DF5757" }, -- Map <String, Integer> -- class
+-- ["@lsp.typemod.class.public.java"] = { fg = "#DF5757" }, -- HashMap | HashSet | ArrayList
+-- ["@lsp.typemod.interface.public.java"] = { fg = "#DF5757" }, -- Map | Set | List

@@ -2,7 +2,7 @@ vim.o.number = true -- Enable line numbers
 vim.o.relativenumber = true -- Enable relative line numbers
 vim.o.termguicolors = true
 vim.g.base16colorspace = 256 -- NEW MAYBE DELETE
-
+vim.o.wrap = false
 vim.o.hidden = true
 
 vim.cmd("set expandtab")
@@ -49,6 +49,14 @@ vim.api.nvim_set_keymap("n", "<leader>bn", "<cmd>bnext<CR>", { noremap = true, s
 vim.api.nvim_set_keymap("n", "<Leader>bsv", ":vsplit<CR>", { noremap = true, silent = true }) -- Vertical split
 vim.api.nvim_set_keymap("n", "<Leader>bsh", ":split<CR>", { noremap = true, silent = true }) -- Horizontal split
 vim.api.nvim_set_keymap("n", "<Leader>bwc", ":close<CR>", { noremap = true, silent = true }) -- Close current window
+
+
+
+
+vim.api.nvim_set_keymap("n", "<Leader>m", ":Inspect<CR>", { noremap = true, silent = true }) -- Save and Quit
+vim.api.nvim_set_keymap('n', '<C-T>', '<Nop>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<D-T>', '<Nop>', {noremap = true, silent = true})
+-- vim.g.neovide_input_macos_alt_is_meta = true -- Use alt as meta key -- did not work
 ----------------                              ----------------
 
 -------------------------------------------------------

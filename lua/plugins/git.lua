@@ -19,9 +19,9 @@ return {
 				watch_gitdir = {
 					follow_files = true,
 				},
-				auto_attach = true,
+				auto_attach = true, 
 				attach_to_untracked = false,
-				current_line_blame = true, -- true | false ~> Toggle with `:Gitsigns toggle_current_line_blame`
+				current_line_blame = false, -- LEAVE AS FALSE ~> Toggle with `:Gitsigns toggle_current_line_blame`
 				current_line_blame_opts = {
 					virt_text = true,
 					virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
