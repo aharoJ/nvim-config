@@ -2,19 +2,19 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local project_root = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1])
 
 local config_java = {
-    -- cmd = {vim.fn.expand('~/.local/share/nvim/mason/bin/jdtls')},
-    cmd = { "/Users/aharo/.local/share/nvim/mason/bin/jdtls" },
-    root_dir = project_root,
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        -- You can put your buffer-specific key mappings here, for example:
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
-    end,
-    init_options = {
-        bundles = {
-            vim.fn.glob("/Users/aharo/.config/nvim/ftplugin/java-debug/com.microsoft.java.debug.plugin-0.51.1.jar", 1),
-        },
-    },
+	-- cmd = {vim.fn.expand('~/.local/share/nvim/mason/bin/jdtls')},
+	cmd = { "/Users/aharo/.local/share/nvim/mason/bin/jdtls" },
+	root_dir = project_root,
+	capabilities = capabilities,
+	on_attach = function(client, bufnr)
+		-- You can put your buffer-specific key mappings here, for example:
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { silent = true })
+	end,
+	init_options = {
+		bundles = {
+			vim.fn.glob("/Users/aharo/.config/nvim/ftplugin/java-debug/com.microsoft.java.debug.plugin-0.51.1.jar", 1),
+		},
+	},
 }
 
 -- Setup DAP (Debug Adapter Protocol) for Java, if necessary.
@@ -23,19 +23,13 @@ require("jdtls").setup_dap({ hotcodereplace = "auto" })
 -- Start or attach to the LSP server for the current buffer
 require("jdtls").start_or_attach(config_java)
 
-
-
-
-
-
 -- Set indentation
-vim.bo.tabstop = 4
-vim.bo.shiftwidth = 4
-vim.bo.expandtab = true
-
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 
 -------------------    RUNS PROJECT ------------------------
-vim.cmd [[
+vim.cmd([[
 function! CompileAndRunJavaPackage()
     let l:current_file = expand('%')
     let l:package_directory = expand('%:p:h')
@@ -54,19 +48,16 @@ function! CompileAndRunJavaPackage()
     let run_command = '!java -cp ' . l:parent_directory . ' ' . l:full_class
     execute run_command
 endfunction
-]]
+]])
 
-vim.api.nvim_set_keymap('n', '<Space>rp', ':call CompileAndRunJavaPackage()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Space>rp", ":call CompileAndRunJavaPackage()<CR>", { noremap = true, silent = true })
 ----------------                              ----------------
-
-
-
-
-
-
 
 -------------------    RUNS FILE    ------------------------
-vim.api.nvim_set_keymap('n', '<Space>rf', ':w!<CR>:!javac % && echo "" && echo "OUTPUT:" && java %<CR>',
-  { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+	"n",
+	"<Space>rf",
+	':w!<CR>:!javac % && echo "" && echo "OUTPUT:" && java %<CR>',
+	{ noremap = true, silent = true }
+)
 ----------------                              ----------------
-
