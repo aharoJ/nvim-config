@@ -13,9 +13,7 @@ return {
 				null_ls.builtins.formatting.stylua,
 				-- JAVA -----------------------------------------
 				-- null_ls.builtins.formatting.google_java_format, -- ***WE USE FTPLUGIN/JAVA.LUA***
-				null_ls.builtins.diagnostics.checkstyle.with({
-					extra_args = { "-c", "/google_checks.xml" },
-				}),
+				-- null_ls.builtins.diagnostics.checkstyle, -- ***WE USE FTPLUGIN/JAVA.LUA***
 				-- BASH -----------------------------------------
 				null_ls.builtins.formatting.shfmt,
 				require("none-ls-shellcheck.diagnostics"),
@@ -30,8 +28,11 @@ return {
 				null_ls.builtins.diagnostics.staticcheck,
 				null_ls.builtins.formatting.asmfmt,
 				-- PYTHON -------------------------------------
-				null_ls.builtins.formatting.black,
-				null_ls.builtins.formatting.isort,
+				-- null_ls.builtins.formatting.black,
+				-- null_ls.builtins.formatting.isort,
+				-- XML -------------------------------------
+				null_ls.builtins.formatting.tidy,
+				null_ls.builtins.diagnostics.tidy,
 			},
 		})
 
