@@ -36,6 +36,11 @@ vim.api.nvim_set_keymap("n", "<Leader>x", ":x<CR>", { noremap = true, silent = t
 -- Group > <
 vim.api.nvim_set_keymap("x", ">", ">gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
+
+-- remove shift J weird behavior 
+vim.api.nvim_set_keymap('n', 'J', '<NOP>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', 'J', '<NOP>', {noremap = true, silent = true})
+
 ----------------                              ----------------
 
 -------------------       BUFFERS      ------------------------
