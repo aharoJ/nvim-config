@@ -5,11 +5,11 @@ return {
 
   config = function()
     local config = require("nvim-treesitter.configs")
-    require("plugins.autopair")
+    -- require("plugins.autopair")
     config.setup({
       sync_install = false,
       auto_install = true,
-      ensure_installed = { "lua", "python", "json", "http", "typescript" },
+      ensure_installed = { "lua", "python", "json", "http", "typescript", "xml"},
       -- ignore_install = { "javascript" },
 
       incremental_selection = {
@@ -20,6 +20,9 @@ return {
           scope_incremental = "grc",
           node_decremental = "grm",
         },
+      },
+      autotag = {
+        enable = true,
       },
 
       indent = {
@@ -63,10 +66,9 @@ return {
           -- "TSRainbowRed",
           -- "TSRainbowYellow",
           -- "TSRainbowOrange",
-      -- ----------------                       ------------------------
+          -- ----------------                       ------------------------
         },
       },
     })
   end,
 }
-
