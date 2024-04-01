@@ -53,7 +53,7 @@ return {
 -- ["@lsp.mod.public.java"] = { fg = "#ffffff" }, -- <String, Integer>
 --
 ["@lsp.typemod.method.public.java"] = { fg = "#82A8DD" }, -- func name 
-["@lsp.type.class.java"] = { fg = "#ffffff" }, -- PARAM Type Class
+-- ["@lsp.type.class.java"] = { fg = "#ffffff" }, -- PARAM Type Class
 ["@lsp.type.parameter.java"] = { fg = "#AA788D" }, -- PARAM var
 --}
 ["@type.builtin.java"] = { fg = "#7E9C8C" }, -- int | double | float
