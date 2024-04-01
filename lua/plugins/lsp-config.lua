@@ -15,7 +15,7 @@ return {
 		end,
 	},
 	{
-		"mfussenegger/nvim-jdtls",
+		"mfussenegger/nvim-jdtls", -- ***Java LSP***
 	},
 	{
 		"williamboman/mason.nvim",
@@ -29,7 +29,7 @@ return {
 		lazy = false,
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "tsserver", "jdtls", "bashls" },
+				ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "tsserver", "bashls" },
 				automatic_installation = true,
 			})
 		end,
@@ -37,11 +37,15 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
+		-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			local lspconfig = require("lspconfig")
 			lspconfig.tsserver.setup({
+				capabilities = capabilities,
+			})
+			lspconfig.lemminx.setup({
 				capabilities = capabilities,
 			})
 			lspconfig.pyright.setup({
