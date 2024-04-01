@@ -1,7 +1,7 @@
 return {
 	'nvimdev/dashboard-nvim',
 	dependencies = {
-		'kyazdani42/nvim-web-devicons'
+		-- 'kyazdani42/nvim-web-devicons'
 	},
 	enabled = true,
 	config = function()
