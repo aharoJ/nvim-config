@@ -94,12 +94,12 @@ return {
 			vim.keymap.set("n", "<leader>gb", builtin.buffers, {})
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-			-- Key mapping for your custom function
 			vim.keymap.set("n", "<leader>gf", find_files_custom, {})
 
-			-- vim.keymap.set("n", "<leader>bb", builtin.live_grep, {})
+
 			-- Load extensions after configuring Telescope
 			require("telescope").load_extension("ui-select")
+
 		end,
 	},
 }
