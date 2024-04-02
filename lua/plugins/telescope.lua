@@ -4,6 +4,7 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-telescope/telescope-ui-select.nvim",
+		"nvim-telescope/telescope-dap.nvim",
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
@@ -70,7 +71,7 @@ return {
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown({}),
-				},
+				}
 			},
 		})
 
@@ -83,5 +84,28 @@ return {
 
 		-- Load extensions after configuring Telescope
 		require("telescope").load_extension("ui-select")
+
+
+		-- Key bindings for telescope-dap
+		vim.keymap.set('n', '<leader>Wc', function()
+			require'telescope'.extensions.dap.commands{}
+		end, {desc = 'DAP Commands'})
+		
+		vim.keymap.set('n', '<leader>Wo', function()
+			require'telescope'.extensions.dap.configurations{}
+		end, {desc = 'DAP Configurations'})
+		
+		vim.keymap.set('n', '<leader>Wb', function()
+			require'telescope'.extensions.dap.list_breakpoints{}
+		end, {desc = 'List DAP Breakpoints'})
+		
+		vim.keymap.set('n', '<leader>Wv', function()
+			require'telescope'.extensions.dap.variables{}
+		end, {desc = 'DAP Variables'})
+		
+		vim.keymap.set('n', '<leader>Wf', function()
+			require'telescope'.extensions.dap.frames{}
+		end, {desc = 'DAP Frames'})
+		require("telescope").load_extension("dap")
 	end,
 }
