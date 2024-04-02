@@ -3,43 +3,34 @@ return {
 		require("nvim-web-devicons").setup({
 			override = {
 				lua = {
-					-- icon = "",
 					icon = "",
 					color = "#51a0cf",
 					cterm_color = "74",
 					name = "Lua",
 				},
-				-- language = {
-				-- 	icon = " icon_here ",
-				-- 	color = "#",
-				-- 	cterm_color = "74",
-				-- 	name = "Lua",
-				-- },
 			},
-			-- globally enable default icons (default to false)
-			-- will get overriden by `get_icons` option
 			default = true,
 		}),
 	},
-	{
-		"s1n7ax/nvim-window-picker",
-		version = "2.*",
-		config = function()
-			require("window-picker").setup({
-				filter_rules = {
-					include_current_win = false,
-					autoselect_one = true,
-					-- filter using buffer options
-					bo = {
-						-- if the file type is one of following, the window will be ignored
-						filetype = { "neo-tree", "neo-tree-popup", "notify" },
-						-- if the buffer type is one of following, the window will be ignored
-						buftype = { "terminal", "quickfix" },
-					},
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"s1n7ax/nvim-window-picker",
+	-- 	version = "2.*",
+	-- 	config = function()
+	-- 		require("window-picker").setup({
+	-- 			filter_rules = {
+	-- 				include_current_win = false,
+	-- 				autoselect_one = true,
+	-- 				-- filter using buffer options
+	-- 				bo = {
+	-- 					-- if the file type is one of following, the window will be ignored
+	-- 					filetype = { "neo-tree", "neo-tree-popup", "notify" },
+	-- 					-- if the buffer type is one of following, the window will be ignored
+	-- 					buftype = { "terminal", "quickfix" },
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -62,15 +53,8 @@ return {
 				enable_git_status = true,
 				enable_diagnostics = true,
 				open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-				sort_case_insensitive = false, -- used when sorting files and directories in the tree
-				sort_function = nil, -- use a custom function for sorting files and directories in the tree
-				-- sort_function = function (a,b)
-				--       if a.type == b.type then
-				--           return a.path > b.path
-				--       else
-				--           return a.type > b.type
-				--       end
-				--   end , -- this sorts files and directories descendantly
+				sort_case_insensitive = false, 
+				sort_function = nil, 
 				default_component_configs = {
 					container = {
 						enable_character_fade = true,
@@ -93,8 +77,6 @@ return {
 						folder_closed = "",
 						folder_open = "",
 						folder_empty = "󰜌",
-						-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-						-- then these will never be used.
 						default = "*",
 						highlight = "NeoTreeFileIcon",
 					},
@@ -143,9 +125,6 @@ return {
 						enabled = false,
 					},
 				},
-				-- A list of functions, each representing a global custom command
-				-- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-				-- see `:h neo-tree-custom-commands-global`
 				commands = {},
 				window = {
 					position = "left",
@@ -155,20 +134,15 @@ return {
 						nowait = true,
 					},
 					mappings = {
-						["<space>"] = {
-							"toggle_node",
-							nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-						},
+						["<space>"] = "", -- * * * IMPORTANT * * *
 						["<2-LeftMouse>"] = "open",
 						["<cr>"] = "open",
-						["<esc>"] = "cancel", -- close preview or floating neo-tree window
-						["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
-						-- Read `# Preview Mode` for more information
-						-- ["l"] = "focus_preview",
+						["<esc>"] = "cancel",
+						["h"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
 						["l"] = "open", -- This binds the 'l' key to the open action
-						["S"] = "open_split",
+						-- ["S"] = "open_split",
 						["s"] = "open_vsplit",
-						-- ["S"] = "split_with_window_picker",
+						["S"] = "split_with_window_picker",
 						-- ["s"] = "vsplit_with_window_picker",
 						["t"] = "open_tabnew",
 						-- ["<cr>"] = "open_drop",
@@ -187,7 +161,7 @@ return {
 								show_path = "none", -- "none", "relative", "absolute"
 							},
 						},
-						["A"] = "add_directory", -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
+						["A"] = "add_directory",
 						["d"] = "delete",
 						["r"] = "rename",
 						["y"] = "copy_to_clipboard",
@@ -219,19 +193,19 @@ return {
 						hide_by_name = {
 							--"node_modules"
 						},
-						hide_by_pattern = { -- uses glob style patterns
-							--"*.meta",
-							--"*/src/*/tsconfig.json",
+						hide_by_pattern = {
+							"*.meta",
+							"*/src/*/tsconfig.json",
 						},
-						always_show = { -- remains visible even if other settings would normally hide it
-							--".gitignored",
+						always_show = {
+							".gitignored",
 						},
-						never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
+						never_show = {
 							".DS_Store",
 							--"thumbs.db"
 						},
-						never_show_by_pattern = { -- uses glob style patterns
-							--".null-ls_*",
+						never_show_by_pattern = {
+							-- ".null-ls_*",
 						},
 					},
 					follow_current_file = {
@@ -327,13 +301,15 @@ return {
 
 				-------------------    MAP    ------------------------
 				vim.api.nvim_set_keymap("n", "<Leader>e", ":Neotree <CR>", { noremap = true, silent = true }),
-				vim.api.nvim_set_keymap("n", "<leader>gB", ":Neotree buffers reveal float<CR>", { noremap = true, silent = true }),
-
+				vim.api.nvim_set_keymap(
+					"n",
+					"<leader>gB",
+					":Neotree buffers reveal float<CR>",
+					{ noremap = true, silent = true }
+				),
 			})
 
 			-- vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
 		end,
 	},
-	
-	
 }
