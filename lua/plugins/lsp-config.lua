@@ -1,4 +1,6 @@
 return {
+
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	{
 		"WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
 		config = function()
@@ -11,9 +13,15 @@ return {
 			-- vim.api.nvim_set_keymap('n', '<leader>tldd', '<Plug>(toggle-lsp-diag-default)', { noremap = true, silent = true })
 		end,
 	},
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	{
 		"mfussenegger/nvim-jdtls", -- ***Java LSP***
 	},
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	{
 		"williamboman/mason.nvim",
 		lazy = false,
@@ -21,6 +29,9 @@ return {
 			require("mason").setup()
 		end,
 	},
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	{
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
@@ -31,6 +42,9 @@ return {
 			})
 		end,
 	},
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/neodev.nvim", opts = {} },
@@ -44,32 +58,73 @@ return {
 			----------------                              ----------------
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+			-------------------        TS | JS       ------------------------
 			local lspconfig = require("lspconfig")
 			lspconfig.tsserver.setup({
 				capabilities = capabilities,
 			})
+			-------------------        HTML       ------------------------
+			-- npm i -g vscode-langservers-extracted
+			local capabilities_html = vim.lsp.protocol.make_client_capabilities()
+			capabilities_html.textDocument.completion.completionItem.snippetSupport = true
+			lspconfig.html.setup({
+				capabilities = capabilities_html,
+			})
+			-------------------        CSS       ------------------------
+			require("lspconfig").tailwindcss.setup({ -- TAILWINDCSS
+				capabilities = capabilities,
+			})
+
+			local capabilities_css = vim.lsp.protocol.make_client_capabilities()
+			capabilities_css.textDocument.completion.completionItem.snippetSupport = true
+			require("lspconfig").cssls.setup({ -- NORMAL CSS
+				capabilities = capabilities_css,
+			})
+			----------------                              ----------------
+
+			-------------------        XML       ------------------------
 			lspconfig.lemminx.setup({
 				capabilities = capabilities,
 			})
+			----------------                              ----------------
+
+			-------------------        MARKDOWN       ------------------------
+			require("lspconfig").marksman.setup({
+				capabilities = capabilities,
+			})
+			----------------                              ----------------
+
+			-------------------        TOML       ------------------------
+			require("lspconfig").taplo.setup({
+				capabilities = capabilities,
+			})
+			----------------                              ----------------
+
+			-------------------        PYTHON       ------------------------
 			lspconfig.pyright.setup({
 				capabilities = capabilities,
 			})
-			lspconfig.html.setup({
-				capabilities = capabilities,
-			})
-			-- lspconfig.tailwindcss.setup({
-			-- 	capabilities = capabilities,
-			-- })
+			----------------                              ----------------
+
+			-------------------        LUA       ------------------------
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
+			----------------                              ----------------
+
+			-------------------        YAML       ------------------------
 			lspconfig.yamlls.setup({
 				capabilities = capabilities,
 			})
+			----------------                              ----------------
+
+			-------------------        BASH       ------------------------
 			lspconfig.bashls.setup({
+				capabilities = capabilities,
 				cmd = { "bash-language-server", "start" },
 				filetypes = { "sh", "bash" }, -- You can add more file types here if needed
 			})
+			----------------                              ----------------
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true })
 			vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { noremap = true, silent = true })
@@ -90,11 +145,11 @@ return {
 			vim.keymap.set("n", "<space>cwl", function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 			end, { noremap = true, silent = true })
-			--
+
 			-- vim.keymap.set("n", "<space>cf", function()
 			--   vim.lsp.buf.format({ async = true })
 			-- end, { noremap = true, silent = true })
 		end,
 	},
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
-
