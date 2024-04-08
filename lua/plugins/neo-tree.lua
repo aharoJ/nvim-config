@@ -202,6 +202,11 @@ return {
 						},
 						never_show = {
 							".DS_Store",
+							".git",
+							".next",
+							".vercel",
+							"node_modules",
+              ".vscode",
 							--"thumbs.db"
 						},
 						never_show_by_pattern = {
