@@ -14,6 +14,14 @@ return {
 				--  diagnostics -- ***WE USE FTPLUGIN/JAVA.LUA***
 				----------------                              ----------------
 
+				-------------------        TESTING       ------------------------
+				-- formatting -- ***WE USE FTPLUGIN/JAVA.LUA***
+				-- null_ls.builtins.formatting.google_java_format,
+				-- null_ls.builtins.diagnostics.checkstyle.with({
+				--       extra_args = { "-c", "/Users/aharo/.local/share/nvim/java-stuff/intellij-java-google-style.xml" },
+				--     }),
+				----------------                              ----------------
+
 				-------------------        LUA       ------------------------
 				null_ls.builtins.formatting.stylua,
 				-- null_ls.builtins.diagnostics.selene,
@@ -30,7 +38,7 @@ return {
 				-- formatting: PRETTIER FORMATTER
 				require("none-ls.diagnostics.eslint_d"), -- TS | JS
 				-------------------        HTML       ------------------------
-				null_ls.builtins.diagnostics.markdownlint, -- HTML
+				null_ls.builtins.diagnostics.markuplint,
 				-------------------        CSS       ------------------------
 				null_ls.builtins.diagnostics.stylelint, -- CSS
 				----------------                              ----------------
@@ -69,7 +77,7 @@ return {
 				----------------                              ----------------
 
 				-------------------        PRETTIER FORMATTER       ------------------------
-				null_ls.builtins.formatting.prettier.with({
+				null_ls.builtins.formatting.prettierd.with({
 					filetypes = {
 						"javascript",
 						"javascriptreact",
