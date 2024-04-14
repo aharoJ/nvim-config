@@ -66,6 +66,11 @@ return {
 				}),
 				----------------                              ----------------
 
+				-------------------        SQL       ------------------------
+				-- null_ls.builtins.formatting.sql_formatter, -- WORKS BUT NO LSP ELSE BREAKS
+				null_ls.builtins.formatting.pg_format, -- WORKS BUT NO LSP ELSE BREAKS
+				----------------                              ----------------
+
 				-------------------        MARKDOWN       ------------------------
 				-- formatting: PRETTIER FORMATTER
 				-- null_ls.builtins.diagnostics.markdownlint, -- BREAKS MARKDOWN
