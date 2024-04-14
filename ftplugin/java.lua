@@ -88,6 +88,7 @@ local config = {
     "java.base/java.util=ALL-UNNAMED",
     "--add-opens",
     "java.base/java.lang=ALL-UNNAMED",
+    "-javaagent:/Users/aharo/.local/share/nvim/java-stuff/lombok.jar",
     "-jar",
     vim.fn.glob("/Users/aharo/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
     "-configuration",
