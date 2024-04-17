@@ -1,4 +1,5 @@
 # nvim
+![alt text](nvim.png)
 
 ### JAVA: LSP | Debugging | Completion | Theme
 - https://github.com/aharoJ/nvim-config/blob/main/ftplugin/java.lua
