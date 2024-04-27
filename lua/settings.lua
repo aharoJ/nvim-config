@@ -1,7 +1,7 @@
 vim.o.number = true -- Enable line numbers
 vim.o.relativenumber = true -- Enable relative line numbers
 vim.o.termguicolors = true
-vim.g.base16colorspace = 256 -- NEW MAYBE DELETE
+-- vim.g.base16colorspace = 256 -- NEW MAYBE DELETE
 vim.o.wrap = false
 vim.o.hidden = true
 
@@ -15,7 +15,6 @@ vim.api.nvim_set_keymap("n", "<Leader>p", '"+p', { noremap = true, silent = true
 vim.api.nvim_set_keymap("v", "<Leader>p", '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>P", '"+P', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<Leader>P", '"+P', { noremap = true, silent = true })
-
 -- vim.api.nvim_set_keymap('v', '<Leader>p', '"_dp', { noremap = true, silent = true })
 
 -- next greatest remap ever
@@ -31,38 +30,54 @@ vim.api.nvim_set_keymap("c", "<Down>", "<C-n>", { noremap = true })
 -- File Operations
 vim.api.nvim_set_keymap("n", "<Leader>w", ":w<CR>", { noremap = true, silent = true }) -- Save file
 vim.api.nvim_set_keymap("n", "<Leader>q", ":q!<CR>", { noremap = true, silent = true }) -- Quit
+vim.api.nvim_set_keymap("n", "<Leader>Q", ":qa!<CR>", { noremap = true, silent = true }) -- Quit ALL
 vim.api.nvim_set_keymap("n", "<Leader>x", ":x<CR>", { noremap = true, silent = true }) -- Save and Quit
 
 -- Group > <
 vim.api.nvim_set_keymap("x", ">", ">gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
 
--- remove shift J weird behavior 
-vim.api.nvim_set_keymap('n', 'J', '<NOP>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', 'J', '<NOP>', {noremap = true, silent = true})
+-- remove shift J weird behavior
+vim.api.nvim_set_keymap("n", "J", "<NOP>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "J", "<NOP>", { noremap = true, silent = true })
 
+-- vim.api.nvim_command('!xset r rate 1 900')
 ----------------                              ----------------
 
 -------------------       BUFFERS      ------------------------
-vim.api.nvim_set_keymap("n", "<S-h>", "<cmd>bprevious<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-l>", "<cmd>bnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>bc", "<cmd>bd<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>bp", "<cmd>bprevious<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>bn", "<cmd>bnext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-h>", "<cmd>bprevious<CR>", { noremap = true, silent = true }) -- buffer previous
+vim.api.nvim_set_keymap("n", "<S-l>", "<cmd>bnext<CR>", { noremap = true, silent = true }) -- buffer next
+vim.api.nvim_set_keymap("n", "<leader>bc", "<cmd>bd<CR>", { noremap = true, silent = true }) -- buffer close
 
 -- sub buffer: Window Management
 vim.api.nvim_set_keymap("n", "<Leader>bsv", ":vsplit<CR>", { noremap = true, silent = true }) -- Vertical split
 vim.api.nvim_set_keymap("n", "<Leader>bsh", ":split<CR>", { noremap = true, silent = true }) -- Horizontal split
 vim.api.nvim_set_keymap("n", "<Leader>bwc", ":close<CR>", { noremap = true, silent = true }) -- Close current window
 
-
-
-
-vim.api.nvim_set_keymap("n", "<Leader>m", ":Inspect<CR>", { noremap = true, silent = true }) -- Save and Quit
-vim.api.nvim_set_keymap('n', '<C-T>', '<Nop>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<D-T>', '<Nop>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<C-T>", "<Nop>", { noremap = true, silent = true }) -- idk
+vim.api.nvim_set_keymap("n", "<D-T>", "<Nop>", { noremap = true, silent = true }) -- idk
 -- vim.g.neovide_input_macos_alt_is_meta = true -- Use alt as meta key -- did not work
 ----------------                              ----------------
+
+-------------------       TREESITTER      ------------------------
+vim.api.nvim_set_keymap("n", "<Leader>m", ":Inspect<CR>", { noremap = true, silent = true }) -- For  TreeSitter Inspect
+----------------                              ----------------
+
+-------------------       MARKDOWN PREVIEW      ------------------------
+vim.api.nvim_set_keymap("n", "<Space>cP", ":w!<CR>:!npx prettier --check %<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap("n", "<Space>cp", ":w!<CR>:!npx prettier % --write <CR>", { noremap = true, silent = true })
+----------------                              ----------------
+
+vim.api.nvim_set_keymap("n", "<F8>", ":terminal npm run dev<CR>", { noremap = true, silent = true })
+
+
+
+
+
+
+
+
 
 -------------------------------------------------------
 -- Enable persistent undo
