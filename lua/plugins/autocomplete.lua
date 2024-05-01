@@ -1,107 +1,119 @@
 return {
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",                 -- source for LSP completions ** IMPORTANT **
-      "hrsh7th/cmp-buffer",                   -- source for text in buffer
-      "hrsh7th/cmp-path",                     -- source for file system paths in commands
-      "L3MON4D3/LuaSnip",                     -- snippet engine
-      "saadparwaiz1/cmp_luasnip",             -- for lua autocompletion
-      "rafamadriz/friendly-snippets",         -- useful snippets library
-      "onsails/lspkind.nvim",                 -- vs-code like pictograms
-      "hrsh7th/cmp-nvim-lsp-document-symbol", -- document symbols
-      "hrsh7th/cmp-nvim-lsp-signature-help",  -- signature help
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp", -- source for LSP completions ** IMPORTANT **
+			"hrsh7th/cmp-buffer", -- source for text in buffer
+			"hrsh7th/cmp-path", -- source for file system paths in commands
+			"L3MON4D3/LuaSnip", -- snippet engine
+			"saadparwaiz1/cmp_luasnip", -- for lua autocompletion
+			"rafamadriz/friendly-snippets", -- useful snippets library
+			"hrsh7th/cmp-nvim-lsp-document-symbol", -- document symbols
+			"hrsh7th/cmp-nvim-lsp-signature-help", -- signature help
+		},
+		config = function()
+			-------------------    TAB MAGIC    ------------------------
+			local function check_backspace()
+				local col = vim.fn.col(".") - 1
+				return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+			end
+			----------------                              ----------------
+			local cmp = require("cmp")
+			require("luasnip.loaders.from_vscode").lazy_load()
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
+					end,
+				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				formatting = {
+					format = function(entry, vim_item)
+						local kind_icons_and_labels = {
+							Text = " Text",
+							Method = "󰆧 Method",
+							Function = "󰊕 Function",
+							Constructor = " Constructor",
+							Field = " Field",
+							Variable = " Variable",
+							Class = " Class",
+							Interface = " Interface",
+							Module = " Module",
+							Property = " Property",
+							Unit = " Unit",
+							Value = "󰎠 Value",
+							Enum = " Enum",
+							Keyword = " Keyword",
+							Snippet = " Snippet",
+							Color = " Color",
+							File = " File",
+							Reference = " Reference",
+							Folder = " Folder",
+							EnumMember = " EnumMember",
+							Constant = "󰏿 Constant",
+							Struct = " Struct",
+							Event = " Event",
+							Operator = " Operator",
+							TypeParameter = " TypeParameter",
+						}
+						-- Assign icon based on the completion item kind
+						vim_item.kind = kind_icons_and_labels[vim_item.kind] or vim_item.kind
+						-- Define source labels and prepend them with the respective icons
+						local source_icons = {
+							nvim_lsp = "", -- "[LSP]"
+						}
 
-      {
-        "VonHeikemen/lsp-zero.nvim", -- TAB | SHIFT-TAB to navigate through snippets
-        branch = "v2.x",
-      },
-    },
-    config = function()
-      local lspkind = require("lspkind") -- VSCODE
+						-- Prepend the source name with the corresponding icon
+						vim_item.menu = source_icons[entry.source.name] or vim_item.menu
 
-      local cmp_action = require("lsp-zero").cmp_action()
-      local cmp = require("cmp")
+						return vim_item
+					end,
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					-------------------    TAB FORWARD    ------------------------
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.expandable() then
+							luasnip.expand()
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						elseif check_backspace() then
+							fallback()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-        mapping = cmp.mapping.preset.insert({
-          -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ----------------------------------------------
-          ["<C-m>"] = cmp_action.luasnip_jump_backward(),
-          ["<C-f>"] = cmp_action.luasnip_jump_forward(),
-          ["<C-p>"] = cmp_action.luasnip_jump_backward(),
-          ["<Tab>"] = cmp_action.luasnip_supertab(),
-          ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
-          ----------------------------------------------
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
-        ----------------                              ----------------
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" }, -- For Snippets
-          { name = "nvim_lsp_document_symbol" },
-          { name = "nvim_lsp_signature_help" },
-          -- { name = "buffer" }, -- text within current buffer -- DISLIKE THIS VERY MUCH
-          { name = "path" }, -- file system paths
-        }),
-        formatting = {
-          format = lspkind.cmp_format({
-            -- mode = "symbol",    -- show only symbol annotations
-            maxwidth = 50,            -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            ellipsis_char = "...",    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
-            symbol_map = {
-              Copilot = "",
-              Text = "",
-              Method = "󰆧",
-              Function = "󰊕",
-              Constructor = "",
-              Field = "",
-              Variable = "",
-              Class = "",
-              Interface = "",
-              Module = "",
-              Property = "",
-              Unit = "",
-              Value = "󰎠",
-              Enum = "",
-              Keyword = "",
-              Snippet = "",
-              Color = "",
-              File = "",
-              Reference = "",
-              Folder = "",
-              EnumMember = "",
-              Constant = "󰏿",
-              Struct = "", -- a C language thing
-              Event = "",
-              Operator = "",
-              TypeParameter = "",
-            },
-          }),
-        },
-      })
-      -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
-      -- -- blue
-      vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bg = "NONE", fg = "#569CD6" })
-      vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#569CD6" })
-      -- -- light blue
-      vim.api.nvim_set_hl(0, "CmpItemKindVariable", { bg = "NONE", fg = "#9CDCFE" })
-      vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#9CDCFE" })
-      vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#9CDCFE" })
-    end,
-  },
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+					-------------------    TAB BACKWARDS    ------------------------
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+				}),
+				----------------                              ----------------
+				sources = cmp.config.sources({
+					{ name = "luasnip" }, -- For Snippets
+					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_document_symbol" },
+					{ name = "nvim_lsp_signature_help" },
+					{ name = "path" }, -- file system paths
+					-- { name = "buffer" }, -- text within current buffer -- DISLIKE THIS VERY MUCH
+				}),
+			})
+		end,
+	},
 }
