@@ -63,21 +63,30 @@ return {
       lspconfig.tsserver.setup({
         capabilities = capabilities,
       })
-      -------------------        HTML       ------------------------
-      -- npm i -g vscode-langservers-extracted
+      ----------------                              ----------------
+
+      -- -------------------        HTML       ------------------------
       local capabilities_html = vim.lsp.protocol.make_client_capabilities()
       capabilities_html.textDocument.completion.completionItem.snippetSupport = true
       lspconfig.html.setup({
-        capabilities = capabilities_html,
+        capabilities = capabilities_html, -- npm i -g vscode-langservers-extracted
       })
+      -- -------------------        HTML       ------------------------
+      -- lspconfig.html.setup({
+      --   capabilities = capabilities,
+      -- })
+      -- ----------------                              ----------------
+
       -------------------        TAILWINDCSS       ------------------------
-      require("lspconfig").tailwindcss.setup({ -- TAILWINDCSS
+      lspconfig.tailwindcss.setup({ -- TAILWINDCSS
         capabilities = capabilities,
       })
+      ----------------                              ----------------
+
       -------------------        CSS       ------------------------
       local capabilities_css = vim.lsp.protocol.make_client_capabilities()
       capabilities_css.textDocument.completion.completionItem.snippetSupport = true
-      require("lspconfig").cssls.setup({ -- NORMAL CSS
+      lspconfig.cssls.setup({ -- NORMAL CSS
         capabilities = capabilities_css,
       })
       ----------------                              ----------------
@@ -89,15 +98,21 @@ return {
       ----------------                              ----------------
 
       -------------------        MARKDOWN       ------------------------
-      require("lspconfig").marksman.setup({
+      lspconfig.marksman.setup({
         capabilities = capabilities,
       })
       ----------------                              ----------------
+      -- -------------------        Obsidian MARKDOWN       ------------------------
+      -- lspconfig.markdown_oxide.setup({
+      --   capabilities = capabilities,
+      -- })
+
+      -- ----------------                              ----------------
 
       -------------------        TOML       ------------------------
-      require("lspconfig").taplo.setup({
-        capabilities = capabilities,
-      })
+      -- require("lspconfig").taplo.setup({
+      --   capabilities = capabilities,
+      -- })
       ----------------                              ----------------
 
       -------------------        PYTHON       ------------------------
@@ -123,6 +138,15 @@ return {
         capabilities = capabilities,
         cmd = { "bash-language-server", "start" },
         filetypes = { "sh", "bash" }, -- You can add more file types here if needed
+      })
+      ----------------                              ----------------
+
+      -------------------        PHP       ------------------------
+      lspconfig.intelephense.setup({
+        capabilities = capabilities,
+        root_dir = function(fname)
+          return require("lspconfig").util.root_pattern("*.php", ".git")(fname) or vim.fn.getcwd()
+        end,
       })
       ----------------                              ----------------
 
